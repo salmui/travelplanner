@@ -1,2 +1,2 @@
-# travelplanner
-An Event-finding Travel App
+# groupProject1
+this is our first group project for UCB Coding Boot Camp
