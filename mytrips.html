@@ -55,98 +55,28 @@
           <img class="first-slide" src="assets/banner1.png" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Live Music on the Move</h1>
-              <p>Find your next live concert, take photos, and share your experience.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up</a></p>
+              <h1>Going somewhere? Create a Trip to track your journey and find shows at your Destinations</h1>
+              <p><a class="btn btn-lg btn-primary openmodnt" href="#" role="button">Create Trip</a></p>
             </div>
           </div>
         </div>
     </div>
+  <!-- New Trip Modal -->
+    <div id="newtripmodal" class="modal">
 
-
-    <!-- START THE FEATURETTES -->
-      <hr class="featurette-divider">
-
-      <div class="row featurette">
-        <div class="col-md-6 col-md-offset-1">
-          <h2 class="featurette-heading">Find Your next Event.</h2>
-          <p class="lead">Bands playing in your area.</p>
-        </div>
-        <div class="col-md-4">
-          <img class="featurette-image img-responsive center-block" src="assets/crowd2.jpg" alt="Generic placeholder image">
-        </div>
-      </div>
-          <!-- <div id="googleMap" style="width:100%;height:400px;"></div>
-
-      <script>
-      function myMap() {
-      var mapProp= {
-          center:new google.maps.LatLng(51.508742,-0.120850),
-          zoom:5,
-      };
-      var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-      }
-      </script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmTfaVWL9ihT0Rjl0_wvqm5DeYXnbq66Y=myMap"></script>
-              </div> -->
-      <hr class="featurette-divider">
-
-      <div class="row featurette">
-        <div class="col-md-7 col-md-push-5">
-          <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        </div>
-        <div class="col-md-5 col-md-pull-7">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+          <form class="modalform"> <!-- Adding a trip -->
+            <label for="newtripname" class="pushright">Name your Trip</label><br>
+            <input type="text" name="newtripname" class="modalinput" id="newtripname"><br>
+            <label for="newtripdescrip">Describe your Trip</label><br>
+            <input type="text" name="newtripdescrip" class="modalinput" id="newtripdescrip"><br>
+            <input type="submit" id="newtripsubmit">
+          </form>
       </div>
 
-      <hr class="featurette-divider">
-
-      <div class="row featurette">
-        <div class="col-md-7">
-          <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        </div>
-        <div class="col-md-5">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-      </div>
-
-      <hr class="featurette-divider">
-
-
-          <!-- Marketing messaging and featurettes
-          ================================================== -->
-          <!-- Wrap the rest of the page in another container to center all the content. -->
-
-      <div class="container marketing">
-
-        <!-- Three columns of text below the carousel -->
-        <div class="row">
-          <div class="col-lg-4">
-            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-          <div class="col-lg-4">
-            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
-            <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-          <div class="col-lg-4">
-            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-        </div><!-- /.row -->
-
-        <!-- /END THE FEATURETTES -->
-
-
+    </div>
         <!-- FOOTER -->
         <footer>
           <p class="pull-right"><a href="#">Back to top</a></p>
@@ -180,7 +110,6 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
     <!-- <script src="../../dist/js/bootstrap.min.js"></script> -->
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <!-- <script src="../../assets/js/vendor/holder.min.js"></script> -->

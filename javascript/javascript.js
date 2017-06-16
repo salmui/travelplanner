@@ -3,38 +3,51 @@
   var venueid = ''
   var tripName = 'Midwest'
 
-$('#newtripsubmit').on('click', function(event){
-    event.preventDefault()
-    var newTripDesc = $('#newtripdescrip').val()
-    tripName = $('#newtripname').val().trim()
-    console.log('Trip name = ' + tripName + '. Trip Description = ' + newTripDesc)
-    database.ref('testUser/' + tripName).set({
+// On-Click Listeners
+  // New Trip Submit
+    $('#newtripsubmit').on('click', function(event){
+      event.preventDefault()
+      var newTripDesc = $('#newtripdescrip').val()
+      tripName = $('#newtripname').val().trim()
+      console.log('Trip name = ' + tripName + '. Trip Description = ' + newTripDesc)
+      database.ref('testUser/' + tripName).set({
         tripname: tripName,
         tripdesc: newTripDesc,
         tripcounter: 0
         })
-})
-$('#newdestsubmit').on('click', function(event){
-    event.preventDefault()
-    var newDest = $('#newdestname').val().trim()
-    var newDestLoc = $('#newdestloc').val().trim()
-    var newDestArr = $('#newdestarr').val().trim()
-    var newDestDept = $('#newdestdept').val().trim()
-    var newDestComm = $('#newdestcomm').val().trim()
-    var currentTripCounter
-    database.ref('testUser/' + tripName).once('value').then(function(snapshot){
+    })
+  //New Destination Submit
+    $('#newdestsubmit').on('click', function(event){
+      event.preventDefault()
+      var newDest = $('#newdestname').val().trim()
+      var newDestLoc = $('#newdestloc').val().trim()
+      var newDestArr = $('#newdestarr').val().trim()
+      var newDestDept = $('#newdestdept').val().trim()
+      var newDestComm = $('#newdestcomm').val().trim()
+      var currentTripCounter
+      database.ref('testUser/' + tripName).once('value').then(function(snapshot){
         console.log(snapshot.val().tripcounter)
         currentTripCounter = snapshot.val().tripcounter
-    })
-    database.ref('testUser/' + tripName + '/dests/' + currentTripCounter).set({
+      })
+      database.ref('testUser/' + tripName + '/dests/' + currentTripCounter).set({
         destName: newDest,
         destLoc: newDestLoc,
         destArr: newDestArr,
         destDept: newDestDept,
         destComm: newDestComm
+      })
     })
-})
 
+
+  // Modal Functionality
+    $('.openmodnt').on('click', function(event){
+      event.preventDefault()
+      $('#newtripmodal').show()
+    })
+    $('.close').on('click', function(event){
+      event.preventDefault()
+      $('#newtripmodal').hide()
+    })
 
 // $('#user_submit').on('click', function(){
 //     var user_email =
