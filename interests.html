@@ -4,16 +4,19 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <link rel="icon" href="../../favicon.ico"> -->
     <title>Group Project 1</title>
-    <!-- Bootstrap core CSS -->
+  <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <!-- Custom styles for this template -->
+      <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
+  <!-- Custom styles for this template -->
     <link href="style/style.css" rel="stylesheet">
   </head>
 
   <body>
     <!-- Navbar -->
-    <div class="navbar-wrapper">
+    <div class="navbar-wrapper navbar-custom">
       <div class="container">
         <nav class="navbar navbar-inverse navbar-static-top">
           <div class="container">
@@ -24,13 +27,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-             <a class="navbar-brand" href="index.html">NSN</a>
+              <a class="navbar-brand" href="index.html">NSN</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                   <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="account.html">Account</a></li>
-                    <li><a href="interests.html">Add Interests</a></li>
+                    <li class="active"><a href="interests.html">Add Interests</a></li>
                     <li><a href="mytrips.html">My Trips</a></li>
                     <li><a href="newtrip.html">Create A New Trip</a></li>
                     <li class="dropdown">
@@ -70,7 +73,7 @@
           <p class="lead">Bands playing in your area.</p>
         </div>
         <div class="col-md-4">
-          <img class="featurette-image img-responsive center-block" src="assets/crowd.jpg" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive center-block" src="assets/guitar.jpeg" alt="Generic placeholder image">
         </div>
       </div>
           <!-- <div id="googleMap" style="width:100%;height:400px;"></div>
@@ -89,12 +92,12 @@
       <hr class="featurette-divider">
 
       <div class="row featurette">
-        <div class="col-md-6 col-md-push-6">
+        <div class="col-md-7 col-md-push-5">
           <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
-        <div class="col-md-6 col-md-pull-6">
-          <img class="featurette-image img-responsive center-block" src="assets/dj2.jpeg" alt="Generic placeholder image">
+        <div class="col-md-5 col-md-pull-7">
+          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
         </div>
       </div>
 
@@ -106,7 +109,7 @@
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-responsive center-block" src="assets/keys.jpeg" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
         </div>
       </div>
 
@@ -142,23 +145,7 @@
         </div><!-- /.row -->
 
         <!-- /END THE FEATURETTES -->
-        <div class="row">
-          <div class="column-md-12">
-            <form> <!-- Adding a trip -->
-              <input type="text" name="newtripname" id="newtripname"><br>
-              <input type="text" name="newtripdescrip" id="newtripdescrip"><br>
-              <input type="submit" id="newtripsubmit">
-            </form><br>
-            <form> <!-- Adding a Destination -->
-              <input type="text" name="newdest" id="newdestname"> <!-- New Destination Name -->
-              <input type="text" name="newdestloc" id="newdestloc"> <!-- New Destination Location -->
-              <input type="text" name="newdestarr" id="newdestarr"> <!-- New Destination Arrival Date/Time -->
-              <input type="text" name="newdestdept" id="newdestdept"> <!-- New Destination Depature Date/Time -->
-              <input type="text" name="newdestcomm" id="newdestcomm"> <!-- New Destination Comments -->
-              <input type="submit" id="newdestsubmit">
-            </form>
-          </div>
-        </div>
+
 
         <!-- FOOTER -->
         <footer>
@@ -192,8 +179,13 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <!-- <script src="../../dist/js/bootstrap.min.js"></script> -->
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <!-- <script src="../../assets/js/vendor/holder.min.js"></script> -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="javascript/javascript.js"></script>
 
