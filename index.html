@@ -54,12 +54,30 @@
             <div class="carousel-caption">
               <h1>Live Music on the Move</h1>
               <p>Find your next live concert, take photos, and share your experience.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up</a></p>
+              <p><a class="btn btn-lg btn-primary newusersignup" href="#" role="button">Sign up</a></p>
             </div>
           </div>
         </div>
     </div>
 
+    <div id="newusermodal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+          <form class="modalform"> <!-- Adding a trip -->
+            <label for="newuseremail" class="">Enter Email</label><br>
+            <input type="text" name="newuseremail" class="modalinput" id="newuseremail"><br>
+            <label for="newuserpw">Enter a password</label><br>
+            <input type="text" name="newuserpw" class="modalinput" id="newuserpw"><br>
+            <label for="newuserconfirm">Confirm your password</label>
+            <input type="text" name="newuserconfirm" class="modalinput" id="newuserconfirm"><br>
+            <input type="submit" id="newusersubmit">
+            <p style="visibility:hidden" class="errormsg">Your passwords must match</p>
+          </form>
+      </div>
+
+    </div>
 
     <!-- START THE FEATURETTES -->
       <hr class="featurette-divider">
