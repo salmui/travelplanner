@@ -33,9 +33,6 @@ $('#newdestsubmit').on('click', function(event){
         destDept: newDestDept,
         destComm: newDestComm
     })
-    database.ref('testUser/' + tripName).update({
-        tripcounter: currentTripCounter + 1
-    })
 })
 
 
