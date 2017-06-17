@@ -86,9 +86,7 @@
     console.log('On mytrips page')
     database.ref(userid + '/trips').on('value', function(response){
       var temp1 = Object.keys(response)
-      console.log(response)
-      console.log(response.val())
-      console.log(temp1.length)
+      console.log('temp1 length = ' + temp1.length)
       var triplist = $('<div class="tripitem">')
       var triplistname = $('<div class="tripname">')
       var triplistdescrip = $('<div class="tripdescrip">')
