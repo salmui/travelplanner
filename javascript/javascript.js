@@ -66,8 +66,10 @@ $('#newusersubmit').on('click', function(){
       if(userPassword === confirmPassword){
         firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
           // Handle Errors here.
+          debugger;
           var errorCode = error.code;
           var errorMessage = error.message;
+          var userid = firebase.UserInfo#uid
           // ...
             });
       } else {
