@@ -43,6 +43,7 @@
     //New User
       $('.newusersignup').on('click', function(event){
         event.preventDefault()
+        console.log('clicked')
         $('#newusermodal').show()
       })
       $('.close').on('click', function(event){
