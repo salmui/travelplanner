@@ -1,7 +1,6 @@
 // Variables
   var database = firebase.database()
   var venueid = ''
-  var tripName
   var userid
 // On-Click Listeners
   // New Trip Submit
@@ -87,14 +86,24 @@
 
 // My Trips
 $(document).on('ready', function(){
-  if(window.location.pathname === '/travelplanner/mytrips.html'){
+  if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
     console.log('On mytrips page')
     database.ref(userid + '/trips').on('value', function(response){
+      debugger;
       var triplist = $('<div class="tripitem">')
-      for(var i = 0, i < response.length, i++){
+      var triplistname = $('<div class="tripname">')
+      var triplistdescrip = $('<div class="tripdescrip">')
+      var triplistopen = $('<span class="tripopen">')
+      var newlistdest = $('<button class="newdest">')
+      for(var i = 0; i < response.length; i++){
+        console.log(response.length + ' : response length')
         triplist
-          .appendTo('.trips')
-          .append()
+          .appendTo($('.trips'))
+          .append(triplistname)
+          .append(triplistdescrip)
+          .append(triplistopen)
+          .append(newlistdest)
+          .addAttr("data-number", i)
       }
     })
   } else {
