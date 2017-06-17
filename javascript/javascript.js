@@ -10,11 +10,12 @@
       var newTripDesc = $('#newtripdescrip').val()
       tripName = $('#newtripname').val().trim()
       console.log('Trip name = ' + tripName + '. Trip Description = ' + newTripDesc)
-      database.ref(userid + '/' + tripName).set({
+      database.ref(userid + '/trips/' + tripName).set({
         tripname: tripName,
         tripdesc: newTripDesc,
         tripcounter: 0
         })
+      $('#newtripmodal').hide()
     })
   //New Destination Submit
     $('#newdestsubmit').on('click', function(event){
@@ -25,11 +26,11 @@
       var newDestDept = $('#newdestdept').val().trim()
       var newDestComm = $('#newdestcomm').val().trim()
       var currentTripCounter
-      database.ref('testUser/' + tripName).once('value').then(function(snapshot){
+      database.ref(userid + '/' + tripName).once('value').then(function(snapshot){
         console.log(snapshot.val().tripcounter)
         currentTripCounter = snapshot.val().tripcounter
       })
-      database.ref('testUser/' + tripName + '/dests/' + currentTripCounter).set({
+      database.ref(userid + '/' + tripName + '/dests/' + currentTripCounter).set({
         destName: newDest,
         destLoc: newDestLoc,
         destArr: newDestArr,
@@ -50,7 +51,6 @@
               debugger;
               var errorCode = error.code;
               var errorMessage = error.message;
-              var userid = firebase.UserInfo#uid
               // ...
                 });
           } else {
@@ -78,12 +78,29 @@
 
 // Firebase Listeners
   firebase.auth().onAuthStateChanged((user) => {
-    debugger;
     if (user) {
       console.log(user.uid);
+      userid = user.uid
+      database.ref(userid + '/')
     }
   });
 
+// My Trips
+$(document).on('ready', function(){
+  if(window.location.pathname === '/travelplanner/mytrips.html'){
+    console.log('On mytrips page')
+    database.ref(userid + '/trips').on('value', function(response){
+      var triplist = $('<div class="tripitem">')
+      for(var i = 0, i < response.length, i++){
+        triplist
+          .appendTo('.trips')
+          .append()
+      }
+    })
+  } else {
+    console.log('run nothing, not on mytrips page')
+  }
+})
 // base eventbrite API
   // $.ajax({
   //   url: 'https://www.eventbriteapi.com/v3/events/search/',
