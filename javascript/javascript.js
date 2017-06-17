@@ -1,7 +1,6 @@
 // Variables
   var database = firebase.database()
   var venueid = ''
-  var tripName
   var userid
 // On-Click Listeners
   // New Trip Submit
@@ -10,11 +9,12 @@
       var newTripDesc = $('#newtripdescrip').val()
       tripName = $('#newtripname').val().trim()
       console.log('Trip name = ' + tripName + '. Trip Description = ' + newTripDesc)
-      database.ref(userid + '/' + tripName).set({
+      database.ref(userid + '/trips/' + tripName).set({
         tripname: tripName,
         tripdesc: newTripDesc,
         tripcounter: 0
         })
+      $('#newtripmodal').hide()
     })
   //New Destination Submit
     $('#newdestsubmit').on('click', function(event){
@@ -25,11 +25,11 @@
       var newDestDept = $('#newdestdept').val().trim()
       var newDestComm = $('#newdestcomm').val().trim()
       var currentTripCounter
-      database.ref('testUser/' + tripName).once('value').then(function(snapshot){
+      database.ref(userid + '/' + tripName).once('value').then(function(snapshot){
         console.log(snapshot.val().tripcounter)
         currentTripCounter = snapshot.val().tripcounter
       })
-      database.ref('testUser/' + tripName + '/dests/' + currentTripCounter).set({
+      database.ref(userid + '/' + tripName + '/dests/' + currentTripCounter).set({
         destName: newDest,
         destLoc: newDestLoc,
         destArr: newDestArr,
@@ -38,7 +38,24 @@
       })
     })
 
-
+  // New User Submit
+    $('#newusersubmit').on('click', function(){
+        var userEmail = $('#newuseremail').val().trim()
+        var userPassword = $('#newuserpw').val().trim()
+        var confirmPassword = $('#newuserconfirm').val().trim()
+        debugger;
+          if(userPassword === confirmPassword){
+            firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+              // Handle Errors here.
+              debugger;
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              // ...
+                });
+          } else {
+            $('.errormsg').show()
+          }
+    })
   // Modal Functionality
     //New User
       $('.newusersignup').on('click', function(event){
@@ -58,30 +75,45 @@
         $('#newtripmodal').show()
       })
 
-$('#newusersubmit').on('click', function(){
-    var userEmail = $('#newuseremail').val().trim()
-    var userPassword = $('#newuserpw').val().trim()
-    var confirmPassword = $('#newuserconfirm').val().trim()
-    debugger;
-      if(userPassword === confirmPassword){
-        firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // ...
-            });
-      } else {
-        $('.errormsg').show()
+// Firebase Listeners
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      console.log(user.uid);
+      userid = user.uid
+      localStorage.setItem("userid", user.uid)
+      database.ref(userid + '/')
+    }
+  });
+
+// My Trips
+$(document).on('ready', function(){
+  userid = localStorage.getItem('userid')
+  if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
+    console.log('On mytrips page')
+    console.log('userid = ' + userid)
+    database.ref(userid + '/trips').on('value', function(response){
+      var temp1 = Object.keys(response)
+      console.log(temp1.length)
+      var triplist = $('<div class="tripitem">')
+      var triplistname = $('<div class="tripname">')
+      var triplistdescrip = $('<div class="tripdescrip">')
+      var triplistopen = $('<span class="tripopen">')
+      var newlistdest = $('<button class="newdest">')
+      for(var i = 0; i < response.length; i++){
+        console.log(response.length + ' : response length')
+        triplist
+          .appendTo($('.trips'))
+          .append(triplistname)
+          .append(triplistdescrip)
+          .append(triplistopen)
+          .append(newlistdest)
+          .addAttr("data-number", i)
       }
+    })
+  } else {
+    console.log('run nothing, not on mytrips page')
+  }
 })
-
-// firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-//   // Handle Errors here.
-//   var errorCode = error.code;
-//   var errorMessage = error.message;
-//   // ...
-// });
-
 // base eventbrite API
   // $.ajax({
   //   url: 'https://www.eventbriteapi.com/v3/events/search/',
