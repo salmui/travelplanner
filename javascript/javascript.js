@@ -82,20 +82,13 @@
       userid = user.uid
       database.ref(userid + '/')
     }
-  });
-
-// My Trips
-$(document).on('ready', function(){
-  if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
+    if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
     console.log('On mytrips page')
-    console.log(userid)
-    debugger;
     database.ref(userid + '/trips').on('value', function(response){
       var temp1 = Object.keys(response)
       console.log(response)
       console.log(response.val())
       console.log(temp1.length)
-      debugger;
       var triplist = $('<div class="tripitem">')
       var triplistname = $('<div class="tripname">')
       var triplistdescrip = $('<div class="tripdescrip">')
@@ -115,7 +108,9 @@ $(document).on('ready', function(){
   } else {
     console.log('run nothing, not on mytrips page')
   }
-})
+  });
+
+
 // base eventbrite API
   // $.ajax({
   //   url: 'https://www.eventbriteapi.com/v3/events/search/',
