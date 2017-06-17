@@ -38,7 +38,25 @@
       })
     })
 
-
+  // New User Submit
+    $('#newusersubmit').on('click', function(){
+        var userEmail = $('#newuseremail').val().trim()
+        var userPassword = $('#newuserpw').val().trim()
+        var confirmPassword = $('#newuserconfirm').val().trim()
+        debugger;
+          if(userPassword === confirmPassword){
+            firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+              // Handle Errors here.
+              debugger;
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              var userid = firebase.UserInfo#uid
+              // ...
+                });
+          } else {
+            $('.errormsg').show()
+          }
+    })
   // Modal Functionality
     //New User
       $('.newusersignup').on('click', function(event){
@@ -58,25 +76,13 @@
         $('#newtripmodal').show()
       })
 
-$('#newusersubmit').on('click', function(){
-    var userEmail = $('#newuseremail').val().trim()
-    var userPassword = $('#newuserpw').val().trim()
-    var confirmPassword = $('#newuserconfirm').val().trim()
+// Firebase Listeners
+  firebase.auth().onAuthStateChanged((user) => {
     debugger;
-      if(userPassword === confirmPassword){
-        firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
-          // Handle Errors here.
-          debugger;
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          var userid = firebase.UserInfo#uid
-          // ...
-            });
-      } else {
-        $('.errormsg').show()
-      }
-})
-
+    if (user) {
+      console.log(user.uid);
+    }
+  });
 
 // base eventbrite API
   // $.ajax({
