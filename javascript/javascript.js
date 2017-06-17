@@ -49,6 +49,7 @@
       $('.close').on('click', function(event){
         event.preventDefault()
         $('#newtripmodal').hide()
+        $('#newusermodal').hide()
       })
 
     //New Trip
@@ -56,17 +57,13 @@
         event.preventDefault()
         $('#newtripmodal').show()
       })
-      $('.close').on('click', function(event){
-        event.preventDefault()
-        $('#newtripmodal').hide()
-      })
 
 $('#newusersubmit').on('click', function(){
     var userEmail = $('#newuseremail').val().trim()
     var userPassword = $('#newuserpw').val().trim()
     var confirmPassword = $('#newuserconfirm').val().trim()
     debugger;
-      if(user_password === confirm_password){
+      if(userPassword === confirmPassword){
         firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
           // Handle Errors here.
           var errorCode = error.code;
