@@ -88,7 +88,13 @@
 $(document).on('ready', function(){
   if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
     console.log('On mytrips page')
+    console.log(userid)
+    debugger;
     database.ref(userid + '/trips').on('value', function(response){
+      var temp1 = Object.keys(response)
+      console.log(response)
+      console.log(response.val())
+      console.log(temp1.length)
       debugger;
       var triplist = $('<div class="tripitem">')
       var triplistname = $('<div class="tripname">')
