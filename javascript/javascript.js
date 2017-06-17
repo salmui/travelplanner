@@ -80,13 +80,20 @@
     if (user) {
       console.log(user.uid);
       userid = user.uid
+      localStorage.setItem("userid", user.uid)
       database.ref(userid + '/')
     }
-    if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
+  });
+
+// My Trips
+$(document).on('ready', function(){
+  userid = localStorage.getItem('userid')
+  if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
     console.log('On mytrips page')
+    console.log('userid = ' + userid)
     database.ref(userid + '/trips').on('value', function(response){
       var temp1 = Object.keys(response)
-      console.log('temp1 length = ' + temp1.length)
+      console.log(temp1.length)
       var triplist = $('<div class="tripitem">')
       var triplistname = $('<div class="tripname">')
       var triplistdescrip = $('<div class="tripdescrip">')
@@ -106,9 +113,7 @@
   } else {
     console.log('run nothing, not on mytrips page')
   }
-  });
-
-
+})
 // base eventbrite API
   // $.ajax({
   //   url: 'https://www.eventbriteapi.com/v3/events/search/',
