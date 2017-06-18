@@ -1,59 +1,135 @@
-
-var config = {
-  apiKey: "AIzaSyCNZ9cMznTZNSVQx9WIxmsrcTWKF7LN_4A",
-  authDomain: "ucbgp1.firebaseapp.com",
-  databaseURL: "https://ucbgp1.firebaseio.com",
-  projectId: "ucbgp1",
-  storageBucket: "ucbgp1.appspot.com",
-  messagingSenderId: "593100455307"
-};
-firebase.initializeApp(config);
-
-var database = firebase.database();
-
-var user_email = ""
-var user_password = ""
-
-
-$('#user-sign-up').on('click', function(){
-var user_email = $('#user-email').val().trim();
-var user_password = $('#password-input').val().trim();
-var confirm_password = $('#confirm-password-input').val().trim();
-
-console.log(user_email);
-console.log(user_password);
-console.log(confirm_password);
-
-debugger;
-if(user_password === confirm_password){
-  firebase.auth().createUserWithEmailAndPassword(user_email, user_password).catch(function(error) {
-   // Handle Errors here.
-   var errorCode = error.code;
-   var errorMessage = error.message;
-   // ...
-    });
-}
-})
 // Variables
-// var database = firebase.database()
-// var venueid = ''
+  var database = firebase.database()
+  var venueid = ''
+  var tripName
+  var userid
+// On-Click Listeners
+  // New Trip Submit
+    $('#newtripsubmit').on('click', function(event){
+      event.preventDefault()
+      var newTripDesc = $('#newtripdescrip').val()
+      tripName = $('#newtripname').val().trim()
+      console.log('Trip name = ' + tripName + '. Trip Description = ' + newTripDesc)
+      database.ref(userid + '/' + tripName).set({
+        tripname: tripName,
+        tripdesc: newTripDesc,
+        tripcounter: 0
+        })
+    })
+  //New Destination Submit
+    $('#newdestsubmit').on('click', function(event){
+      event.preventDefault()
+      var newDest = $('#newdestname').val().trim()
+      var newDestLoc = $('#newdestloc').val().trim()
+      var newDestArr = $('#newdestarr').val().trim()
+      var newDestDept = $('#newdestdept').val().trim()
+      var newDestComm = $('#newdestcomm').val().trim()
+      var currentTripCounter
+      database.ref('testUser/' + tripName).once('value').then(function(snapshot){
+        console.log(snapshot.val().tripcounter)
+        currentTripCounter = snapshot.val().tripcounter
+      })
+      database.ref('testUser/' + tripName + '/dests/' + currentTripCounter).set({
+        destName: newDest,
+        destLoc: newDestLoc,
+        destArr: newDestArr,
+        destDept: newDestDept,
+        destComm: newDestComm
+      })
+    })
 
-// $.ajax({
-//   url: 'https://www.eventbriteapi.com/v3/events/search/',
-//   method: 'GET',
-//   data: {
-//   	token: '75JDM6P6R2M2PFYEECJ3',
-//   	categories: '103',
-//   	sort_by: '-distance',
-//   	'location.address': 'San Francisco'
-//   }
-// }).done(function(response){
-// 	console.log('--------Test 1---------')
-// 	console.log(response)
-// 	for (var i = 0; i < response.events.length; i++){
-// 		var namePrint = response.events[i].name.text
-// 		// venueid = response.events[i].venue_id
-// 		console.log(namePrint)
-// 	  };
-// 	console.log('---------------------------')
-// })
+
+  // Modal Functionality
+    //New User
+      $('.newusersignup').on('click', function(event){
+        event.preventDefault()
+        console.log('clicked')
+        $('#newusermodal').show()
+      })
+      $('.close').on('click', function(event){
+        event.preventDefault()
+        $('#newtripmodal').hide()
+        $('#newusermodal').hide()
+      })
+
+    //New Trip
+      $('.openmodnt').on('click', function(event){
+        event.preventDefault()
+        $('#newtripmodal').show()
+      })
+
+$('#newusersubmit').on('click', function(){
+    var userEmail = $('#newuseremail').val().trim()
+    var userPassword = $('#newuserpw').val().trim()
+    var confirmPassword = $('#newuserconfirm').val().trim()
+    debugger;
+      if(userPassword === confirmPassword){
+        firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // ...
+            });
+      } else {
+        $('.errormsg').show()
+      }
+})
+
+$('#exampleModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('whatever') // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-title').text('New message to ' + recipient)
+  modal.find('.modal-body input').val(recipient)
+})
+// firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+//   // Handle Errors here.
+//   var errorCode = error.code;
+//   var errorMessage = error.message;
+//   // ...
+// });
+
+// base eventbrite API
+  // $.ajax({
+  //   url: 'https://www.eventbriteapi.com/v3/events/search/',
+  //   method: 'GET',
+  //   data: {
+  //     token: '75JDM6P6R2M2PFYEECJ3',
+  //     categories: '103',
+  //     sort_by: '-distance',
+  //     'location.address': 'San Francisco, CA'
+  //   }
+  // }).done(function(response){
+  //     console.log(response)
+  //     for (var i = 0; i < response.length; i++){
+  //         var namePrint = response.events[i].name.text
+  //         var idPrint = response.events[i].venue_id
+  //           $.ajax({
+  //             url: 'https://www.eventbriteapi.com/v3/venues/' + idPrint + '/',
+  //             method: 'GET',
+  //             data: {
+  //               token: '75JDM6P6R2M2PFYEECJ3'
+  //             }
+  //           }).done(function(response){
+  //             var venueName = response.name
+  //             // console.log('--------Event ' + i + ' -----------')
+  //             console.log('Event Name = ' + namePrint)
+  //             console.log('venue_id = ' + idPrint)
+  //             console.log('Venue Name = ' + venueName)
+  //           })
+
+  //       };
+  // })
+
+//eventbrite venue API
+  // $.ajax({
+  //   url: 'https://www.eventbriteapi.com/v3/venues/19770605/',
+  //   method: 'GET',
+  //   data: {
+  //     token: '75JDM6P6R2M2PFYEECJ3'
+  //   }
+  // }).done(function(response){
+  //   console.log(response)
+  // })
