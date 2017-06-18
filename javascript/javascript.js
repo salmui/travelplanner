@@ -67,12 +67,18 @@
         event.preventDefault()
         $('#newtripmodal').hide()
         $('#newusermodal').hide()
+        $('#newdestmodal').hide()
       })
 
     //New Trip
       $('.openmodnt').on('click', function(event){
         event.preventDefault()
         $('#newtripmodal').show()
+      })
+    //New Destination
+      $('.opennewdest').on('click', function(event){
+        event.preventDefault()
+        $('#newdestmodal').show()
       })
 
 // Firebase Listeners
