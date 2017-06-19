@@ -2,6 +2,8 @@
   var database = firebase.database()
   var venueid = ''
   var userid
+  var dataref = database.ref('users/' + userid + '/data')
+  var totaltripcounter
 // On-Click Listeners
   // New Trip Submit
     $('#newtripsubmit').on('click', function(event){
@@ -10,7 +12,7 @@
       var newTripDesc = $('#newtripdescrip').val()
       tripName = $('#newtripname').val().trim()
       console.log('Trip name = ' + tripName + '. Trip Description = ' + newTripDesc)
-      database.ref('users/' + userid + '/trips/' + tripName).set({
+      database.ref('users/' + userid + '/trips/' + time).set({
         tripname: tripName,
         tripdesc: newTripDesc,
         tripcounter: 0,
@@ -88,9 +90,12 @@
 // Firebase Listeners
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      console.log(user.uid);
+      console.log("---------auth state change-----------");
       userid = user.uid
       localStorage.setItem("userid", user.uid)
+      // dataref.once('value').then(function(response){
+      //   localStorage.setItem("tripcounter", response.val())
+      // })
     }
   });
 
@@ -98,20 +103,28 @@
   $(document).on('ready', function(){
     userid = localStorage.getItem('userid')
     if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
-      var tripframe = $('<div class="tripitem">')
       var tripsref = database.ref('users/' + userid + '/trips').orderByChild("created")
       console.log('On mytrips page')
       console.log('userid = ' + userid)
       tripsref.once('value', function(response){
-        // if(response != null){
-          var temp1 = Object.keys(response)
+          var temp1 = Object.keys(response.val())
           var triptemp = response.val()
-          debugger;
           console.log(temp1.length)
           for(var i = 0; i < temp1.length; i++){
-            // console.log(triptemp[i] + "Index: " + i)
+            temp2 = temp1[i]
+            database.ref('users/' + userid + '/trips/' + temp2).once('value').then(function(response){
+              var tripframe = $('<div class="tripitem' + i +'">')
+              temptrip = response.val()
+              debugger;
+              tripframe
+                .append($('.tripclose'))
+                .append($('.tripexpand'))
+                .append($('<h1 class="tripname">'))
+                .append($('<p class="tripdescrip">'))
+                .append($('#destlist'))
+                .appendTo('.tripcontainer')
+            })
           }
-        // }
       })
     } else {
       console.log('run nothing, not on mytrips page')
