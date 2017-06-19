@@ -5,18 +5,21 @@
 // On-Click Listeners
   // New Trip Submit
     $('#newtripsubmit').on('click', function(event){
+      var time = Date.now()
       event.preventDefault()
       var newTripDesc = $('#newtripdescrip').val()
       tripName = $('#newtripname').val().trim()
       console.log('Trip name = ' + tripName + '. Trip Description = ' + newTripDesc)
-      database.ref(userid + '/trips/' + tripName).set({
+      database.ref('users/' + userid + '/trips/' + tripName).set({
         tripname: tripName,
         tripdesc: newTripDesc,
-        tripcounter: 0
+        tripcounter: 0,
+        created: time
         })
       $('#newtripmodal').hide()
     })
-  //New Destination Submit
+
+  // New Destination Submit
     $('#newdestsubmit').on('click', function(event){
       event.preventDefault()
       var newDest = $('#newdestname').val().trim()
@@ -25,11 +28,11 @@
       var newDestDept = $('#newdestdept').val().trim()
       var newDestComm = $('#newdestcomm').val().trim()
       var currentTripCounter
-      database.ref(userid + '/' + tripName).once('value').then(function(snapshot){
+      database.ref('users/' + userid + '/' + tripName).once('value').then(function(snapshot){
         console.log(snapshot.val().tripcounter)
         currentTripCounter = snapshot.val().tripcounter
       })
-      database.ref(userid + '/' + tripName + '/dests/' + currentTripCounter).set({
+      database.ref('users/' + userid + '/' + tripName + '/dests/' + currentTripCounter).set({
         destName: newDest,
         destLoc: newDestLoc,
         destArr: newDestArr,
@@ -56,30 +59,31 @@
             $('.errormsg').show()
           }
     })
-  // Modal Functionality
-    //New User
-      $('.newusersignup').on('click', function(event){
-        event.preventDefault()
-        console.log('clicked')
-        $('#newusermodal').show()
-      })
-      $('.close').on('click', function(event){
-        event.preventDefault()
-        $('#newtripmodal').hide()
-        $('#newusermodal').hide()
-        $('#newdestmodal').hide()
-      })
 
-    //New Trip
-      $('.openmodnt').on('click', function(event){
-        event.preventDefault()
-        $('#newtripmodal').show()
-      })
-    //New Destination
-      $('.opennewdest').on('click', function(event){
-        event.preventDefault()
-        $('#newdestmodal').show()
-      })
+// Modal Functionality
+  //New User
+    $('.newusersignup').on('click', function(event){
+      event.preventDefault()
+      console.log('clicked')
+      $('#newusermodal').show()
+    })
+    $('.close').on('click', function(event){
+      event.preventDefault()
+      $('#newtripmodal').hide()
+      $('#newusermodal').hide()
+      $('#newdestmodal').hide()
+    })
+
+  //New Trip
+    $('.openmodnt').on('click', function(event){
+      event.preventDefault()
+      $('#newtripmodal').show()
+    })
+  //New Destination
+    $('.opennewdest').on('click', function(event){
+      event.preventDefault()
+      $('#newdestmodal').show()
+    })
 
 // Firebase Listeners
   firebase.auth().onAuthStateChanged((user) => {
@@ -87,39 +91,33 @@
       console.log(user.uid);
       userid = user.uid
       localStorage.setItem("userid", user.uid)
-      database.ref(userid + '/')
     }
   });
 
 // My Trips
-$(document).on('ready', function(){
-  userid = localStorage.getItem('userid')
-  if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
-    console.log('On mytrips page')
-    console.log('userid = ' + userid)
-    database.ref(userid + '/trips').on('value', function(response){
-      var temp1 = Object.keys(response)
-      console.log(temp1.length)
-      var triplist = $('<div class="tripitem">')
-      var triplistname = $('<div class="tripname">')
-      var triplistdescrip = $('<div class="tripdescrip">')
-      var triplistopen = $('<span class="tripopen">')
-      var newlistdest = $('<button class="newdest">')
-      for(var i = 0; i < response.length; i++){
-        console.log(response.length + ' : response length')
-        triplist
-          .appendTo($('.trips'))
-          .append(triplistname)
-          .append(triplistdescrip)
-          .append(triplistopen)
-          .append(newlistdest)
-          .addAttr("data-number", i)
-      }
-    })
-  } else {
-    console.log('run nothing, not on mytrips page')
-  }
-})
+  $(document).on('ready', function(){
+    userid = localStorage.getItem('userid')
+    if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
+      var tripframe = $('<div class="tripitem">')
+      var tripsref = database.ref('users/' + userid + '/trips').orderByChild("created")
+      console.log('On mytrips page')
+      console.log('userid = ' + userid)
+      tripsref.once('value', function(response){
+        // if(response != null){
+          var temp1 = Object.keys(response)
+          var triptemp = response.val()
+          debugger;
+          console.log(temp1.length)
+          for(var i = 0; i < temp1.length; i++){
+            // console.log(triptemp[i] + "Index: " + i)
+          }
+        // }
+      })
+    } else {
+      console.log('run nothing, not on mytrips page')
+    }
+  })
+
 // base eventbrite API
   // $.ajax({
   //   url: 'https://www.eventbriteapi.com/v3/events/search/',
