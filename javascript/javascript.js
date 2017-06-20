@@ -82,7 +82,8 @@
       $('#newtripmodal').show()
     })
   //New Destination
-    $('.opennewdest').on('click', function(event){
+    $('opennewdest').on('click', function(event){
+      console.log('clicked')
       event.preventDefault()
       $('#newdestmodal').show()
     })
@@ -107,24 +108,37 @@
       console.log('On mytrips page')
       console.log('userid = ' + userid)
       tripsref.once('value', function(response){
-          var temp1 = Object.keys(response.val())
-          var triptemp = response.val()
-          console.log(temp1.length)
-          for(var i = 0; i < temp1.length; i++){
-            temp2 = temp1[i]
-            database.ref('users/' + userid + '/trips/' + temp2).once('value').then(function(response){
-              var tripframe = $('<div class="tripitem' + i +'">')
-              temptrip = response.val()
-              debugger;
-              tripframe
-                .append($('.tripclose'))
-                .append($('.tripexpand'))
-                .append($('<h1 class="tripname">'))
-                .append($('<p class="tripdescrip">'))
-                .append($('#destlist'))
-                .appendTo('.tripcontainer')
-            })
-          }
+        var responseAsArray = Object.keys(response.val())
+        var triptemp = response.val()
+        triptemp = $.map( triptemp, function( value, created ) {
+          var containersize = $('.tripcontainer')["0"].children.length
+          console.log(value)
+          var mapObject = value
+          var tripframe = $('<div class="tripitem">')
+          var tname = $('<h1 class="tripname">')
+          var tdescrip = $('<p class="tripdescrip">')
+          // var closebtn = $('<span class="glyphicon glyphicon-remove-circle tripclose" data-toggle="collapse" data-target="#destinfo">')
+          var expandbtn = $('<a class="glyphicon glyphicon-chevron-down tripexpand" data-toggle="collapse" data-target="#destlist' + containersize +'"></a>')
+          var destlist = $('<div class="collapse destdrop">')
+          var newdestbtn = $('<span  class="glyphicon glyphicon-plus"></span>')
+          tripframe
+            .attr("id", containersize)
+            .appendTo($('.tripcontainer'))
+            .append(expandbtn)
+          tname
+            .text(mapObject.tripname)
+            .appendTo($('#' + containersize))
+          tdescrip
+            .text(mapObject.tripdesc)
+            .appendTo($('#' + containersize))
+          destlist
+            .attr("id", "destlist" + containersize)
+            .appendTo($('#' + containersize))
+          newdestbtn
+            .attr("id", "opennewdest")
+            .addClass("opennewdest")
+            .appendTo($('#destlist' + containersize))
+        })
       })
     } else {
       console.log('run nothing, not on mytrips page')
