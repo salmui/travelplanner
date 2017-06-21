@@ -4,71 +4,76 @@
   var userid
   var dataref = database.ref('users/' + userid + '/data')
   var totaltripcounter
-// On-Click Listeners
+
+// On-Click Functions
   // New Trip Submit
-    $('#newtripsubmit').on('click', function(event){
+    function newtripsubmit(event){
       var time = Date.now()
       event.preventDefault()
       var newTripDesc = $('#newtripdescrip').val()
       tripName = $('#newtripname').val().trim()
+      debugger;
       console.log('Trip name = ' + tripName + '. Trip Description = ' + newTripDesc)
-      database.ref('users/' + userid + '/trips/' + time).set({
+      database.ref('users/' + userid + '/trips/' + tripName).set({
         tripname: tripName,
         tripdesc: newTripDesc,
         tripcounter: 0,
         created: time
         })
       $('#newtripmodal').hide()
-    })
+    }
+
+
 
   // New Destination Submit
-    $('#newdestsubmit').on('click', function(event){
+    function newdestsubmit(event){
       event.preventDefault()
-      var newDest = $('#newdestname').val().trim()
+      debugger;
+      var tripName = $(this)["0"].offsetParent.offsetParent.attributes[2].value
+      var newDestname = $('#newdestname').val().trim()
       var newDestLoc = $('#newdestloc').val().trim()
       var newDestArr = $('#newdestarr').val().trim()
       var newDestDept = $('#newdestdept').val().trim()
       var newDestComm = $('#newdestcomm').val().trim()
       var currentTripCounter
-      database.ref('users/' + userid + '/' + tripName).once('value').then(function(snapshot){
+      database.ref('users/' + userid + '/trips/' + tripName).once('value').then(function(snapshot){
         console.log(snapshot.val().tripcounter)
         currentTripCounter = snapshot.val().tripcounter
       })
-      database.ref('users/' + userid + '/' + tripName + '/dests/' + currentTripCounter).set({
-        destName: newDest,
+      database.ref('users/' + userid + '/trips/' + tripName + '/dests/' + newDestname).set({
+        destName: newDestname,
         destLoc: newDestLoc,
         destArr: newDestArr,
         destDept: newDestDept,
         destComm: newDestComm
       })
-    })
+      $('#newdestmodal').hide()
+    }
 
   // New User Submit
-    $('#newusersubmit').on('click', function(){
-        var userEmail = $('#newuseremail').val().trim()
-        var userPassword = $('#newuserpw').val().trim()
-        var confirmPassword = $('#newuserconfirm').val().trim()
-        debugger;
-          if(userPassword === confirmPassword){
-            firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
-              // Handle Errors here.
-              debugger;
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              // ...
-                });
-          } else {
-            $('.errormsg').show()
-          }
-    })
+    function newusersubmit(){
+      var userEmail = $('#newuseremail').val().trim()
+      var userPassword = $('#newuserpw').val().trim()
+      var confirmPassword = $('#newuserconfirm').val().trim()
+        if(userPassword === confirmPassword){
+          firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+              });
+        } else {
+          $('.errormsg').show()
+        }
+    }
 
 // Modal Functionality
   //New User
-    $('.newusersignup').on('click', function(event){
+    function newusersignup(event){
       event.preventDefault()
       console.log('clicked')
       $('#newusermodal').show()
-    })
+    }
     $('.close').on('click', function(event){
       event.preventDefault()
       $('#newtripmodal').hide()
@@ -77,16 +82,20 @@
     })
 
   //New Trip
-    $('.openmodnt').on('click', function(event){
+    function ntmodal(event){
       event.preventDefault()
-      $('#newtripmodal').show()
-    })
+      $('#newtripmodal')
+        .show()
+    }
   //New Destination
-    $('opennewdest').on('click', function(event){
+    function ndmodal(event){
+      debugger;
       console.log('clicked')
       event.preventDefault()
-      $('#newdestmodal').show()
-    })
+      $('#newdestmodal')
+        .show()
+        .attr("data-name", $(this).attr("data-name"))
+    }
 
 // Firebase Listeners
   firebase.auth().onAuthStateChanged((user) => {
@@ -111,20 +120,23 @@
         var responseAsArray = Object.keys(response.val())
         var triptemp = response.val()
         triptemp = $.map( triptemp, function( value, created ) {
+          debugger;
           var containersize = $('.tripcontainer')["0"].children.length
+          var name = value.tripname
           console.log(value)
           var mapObject = value
-          var tripframe = $('<div class="tripitem">')
-          var tname = $('<h1 class="tripname">')
-          var tdescrip = $('<p class="tripdescrip">')
-          // var closebtn = $('<span class="glyphicon glyphicon-remove-circle tripclose" data-toggle="collapse" data-target="#destinfo">')
+          var tripframe = $('<div class="tripitem tripitem' + containersize + '">')
+          var tname = $('<h1 class="tripname tripname' + containersize + '">')
+          var tdescrip = $('<p class="tripdescrip tripdescrip' + containersize + '">')
+          var closebtn = $('<span class="glyphicon glyphicon-remove-circle tripclose tripclose' + containersize + '" data-toggle="collapse" data-target="#destinfo">')
           var expandbtn = $('<a class="glyphicon glyphicon-chevron-down tripexpand" data-toggle="collapse" data-target="#destlist' + containersize +'"></a>')
-          var destlist = $('<div class="collapse destdrop">')
-          var newdestbtn = $('<span  class="glyphicon glyphicon-plus"></span>')
+          var destlist = $('<div class="collapse destdrop destdrop' + containersize + '">')
+          var newdestbtn = $('<button  class="glyphicon glyphicon-plus opennewdest' + containersize + '"></button>')
           tripframe
             .attr("id", containersize)
             .appendTo($('.tripcontainer'))
             .append(expandbtn)
+            .append(closebtn)
           tname
             .text(mapObject.tripname)
             .appendTo($('#' + containersize))
@@ -133,9 +145,10 @@
             .appendTo($('#' + containersize))
           destlist
             .attr("id", "destlist" + containersize)
-            .appendTo($('#' + containersize))
+            .appendTo($('.' + 'tripdescrip' + containersize))
           newdestbtn
-            .attr("id", "opennewdest")
+            .attr("data-number", containersize)
+            .attr("data-name", name)
             .addClass("opennewdest")
             .appendTo($('#destlist' + containersize))
         })
@@ -144,6 +157,15 @@
       console.log('run nothing, not on mytrips page')
     }
   })
+
+// On Click Listeners
+  $(document).on('click', '#newusersubmit', newusersubmit);
+  $(document).on('click', '#newdestsubmit', newdestsubmit);
+  $(document).on('click', '#newtripsubmit', newtripsubmit);
+  $(document).on('click', '.newusersignup', newusersignup);
+  $(document).on('click', '.openmodnt', ntmodal);
+  $(document).on('click', '.opennewdest', ndmodal);
+
 
 // base eventbrite API
   // $.ajax({
