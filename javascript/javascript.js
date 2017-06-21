@@ -130,50 +130,74 @@
 // My Trips
   $(document).on('ready', function(){
     userid = localStorage.getItem('userid')
-    if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
+    if(page === "mytrips"){
       var tripsref = database.ref('users/' + userid + '/trips').orderByChild("created")
       console.log('On mytrips page')
       console.log('userid = ' + userid)
       tripsref.once('value', function(response){
         var triptemp = response.val()
-        triptemp = $.map( triptemp, function( value, created ) {
-          var containersize = $('.tripcontainer')["0"].children.length
+        triptemp = $.map( triptemp, function( value, created ) {                    // map 1
+          var tripnum = $('.tripcontainer')["0"].children.length
           var name = value.tripname
           var mapObject = value
-          var tripframe = $('<div class="tripitem tripitem' + containersize + '">')
-          var tname = $('<h1 class="tripname tripname' + containersize + '">')
-          var tdescrip = $('<p class="tripdescrip tripdescrip' + containersize + '">')
-          var closebtn = $('<span class="glyphicon glyphicon-remove-circle tripclose tripclose' + containersize + '" data-toggle="collapse" data-target="#destinfo">')
-          var expandbtn = $('<a class="glyphicon glyphicon-chevron-down tripexpand" data-toggle="collapse" data-target="#destlist' + containersize +'"></a>')
-          var destlist = $('<div class="collapse destdrop destdrop' + containersize + '">')
-          var newdestbtn = $('<button  class="glyphicon glyphicon-plus opennewdest' + containersize + '"></button>')
-          var destref = database.ref('users/' + userid + '/trips/' + name + '/dests').orderByChild("destcreated")
+          var tripframe = $('<div class="tripitem tripitem' + tripnum + '">')
+          var tname = $('<h1 class="tripname tripname' + tripnum + '">')
+          var tdescrip = $('<p class="tripdescrip tripdescrip' + tripnum + '">')
+          var closebtn = $('<span class="glyphicon glyphicon-remove-circle tripclose tripclose' + tripnum + '" data-toggle="collapse" data-target="#destinfo">')
+          var expandbtn = $('<a class="glyphicon glyphicon-chevron-down tripexpand" data-toggle="collapse" data-target="#destlist' + tripnum +'"></a>')
+          var destlist = $('<div class="collapse destdrop destdrop' + tripnum + '">')
+          var newdestbtn = $('<button  class="glyphicon glyphicon-plus opennewdest' + tripnum + '"></button>')
           tripframe
-            .attr("id", containersize)
+            .attr("id", tripnum)
             .appendTo($('.tripcontainer'))
             .append(expandbtn)
             .append(closebtn)
           tname
             .text(mapObject.tripname)
-            .appendTo($('#' + containersize))
+            .appendTo($('#' + tripnum))
           tdescrip
             .text(mapObject.tripdesc)
-            .appendTo($('#' + containersize))
+            .appendTo($('#' + tripnum))
           destlist
-            .attr("id", "destlist" + containersize)
-            .appendTo($('.' + 'tripdescrip' + containersize))
+            .attr("id", "destlist" + tripnum)
+            .appendTo($('.' + 'tripdescrip' + tripnum))
           newdestbtn
-            .attr("data-number", containersize)
+            .attr("data-number", tripnum)
             .attr("data-name", name)
             .addClass("opennewdest")
-            .appendTo($('#destlist' + containersize))
-          destarray = $.map(value.dests, function (value, name) {
+            .appendTo($('#destlist' + tripnum))
+          var desttemp = value.dests
+          desttemp = $.map( desttemp, function(key){
+            var destnum = $('.destdrop' + tripnum)["0"].children.length
+            var dname = key.destName
+            var dcomm = key.destComm
+            var darr = key.destArr
+            var ddept = key.destDept
+            var dloc = key.destLoc
+            var destframe = $('<div class="destframe" id="destframe' + destnum + '-' + tripnum + '">')
+            var destname = $('<div class="destname">')
+            var destcomment = $('<div class="destcomment">')
+            var destarrival = $('<div class="destarrival">')
+            var destdepart = $('<div class="destdepart">')
+            var destlocation = $('<div class="destlocation">')
             debugger;
-            console.log(name)
-            var destframe = $('<div class="destframe' + name + '">')
             destframe
-              .appendTo($('#destlist' + containersize))
-              .text(name)
+              .appendTo($('#destlist' + tripnum))
+            destname
+              .text(dname)
+              .appendTo($('#destframe' + destnum + '-' + tripnum))
+            destcomment
+              .text(dcomm)
+              .appendTo($('#destframe' + destnum + '-' + tripnum))
+            destarrival
+              .text(darr)
+              .appendTo($('#destframe' + destnum + '-' + tripnum))
+            destdepart
+              .text(ddept)
+              .appendTo($('#destframe' + destnum + '-' + tripnum))
+            destlocation
+              .text(dloc)
+              .appendTo($('#destframe' + destnum + '-' + tripnum))
           })
         })
       })

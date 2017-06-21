@@ -244,16 +244,15 @@ label{
     position: relative;
     border-radius: 5px;
     margin-top: 15px;
-    height: 50px;
+    /*height: 50px;*/
     background-color: #EF233C;
+    overflow: auto;
   }
   #placeholderdest{
     margin-left: 50px;
     line-height: 50px;
   }
   .opennewdest{
-    position: relative;
-    float: right;
     margin-top: 15px;
     margin-right: 3%;
   }
@@ -300,4 +299,34 @@ label{
 .btn btn-primary {
   float: right;
   color: #EF233C;
+}
+
+.destframe{
+  height: 5%;
+  background-color: #D80032;
+  color: #EDF2F4;
+  display: block;
+  margin: 5px;
+  border: 2px solid #EDF2F4;
+  border-radius: 5px;
+}
+
+.destname {
+  font-size: 24px;
+  font-family: 'Crushed', cursive;
+  margin-left: 5px;
+  margin-top: 5px;
+  width: 100%;
+}
+.destcomment {
+  margin: 5px;
+  width: 100%;
+}
+.destarrival{
+  float: left;
+  margin-left: 30%;
+}
+.destdepart{
+  float: left;
+  margin-left: 32%;
 }
