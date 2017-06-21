@@ -1,3 +1,28 @@
+var database = firebase.database();
+
+var user_email = ""
+var user_password = ""
+
+
+$('#user-sign-up').on('click', function(){
+var user_email = $('#user-email').val().trim();
+var user_password = $('#password-input').val().trim();
+var confirm_password = $('#confirm-password-input').val().trim();
+
+console.log(user_email);
+console.log(user_password);
+console.log(confirm_password);
+
+debugger;
+if(user_password === confirm_password){
+  firebase.auth().createUserWithEmailAndPassword(user_email, user_password).catch(function(error) {
+   // Handle Errors here.
+   var errorCode = error.code;
+   var errorMessage = error.message;
+   // ...
+    });
+}
+})
 // Variables
   var database = firebase.database()
   var venueid = ''
@@ -166,7 +191,6 @@
   $(document).on('click', '.openmodnt', ntmodal);
   $(document).on('click', '.opennewdest', ndmodal);
 
-
 // base eventbrite API
   // $.ajax({
   //   url: 'https://www.eventbriteapi.com/v3/events/search/',
@@ -208,4 +232,3 @@
   //   }
   // }).done(function(response){
   //   console.log(response)
-  // })
