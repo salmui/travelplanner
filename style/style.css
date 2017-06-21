@@ -214,6 +214,7 @@ label{
   }
   .tripitem{
     height: 10%;
+    width: 95%;
     background-color: #8D99AE;
     border-radius: 5px;
     border: 2px solid #EDF2F4;
@@ -222,11 +223,12 @@ label{
   }
   .tripclose {
     float: right;
+    margin-right: -86%;
   }
   .tripexpand {
     float: right;
     margin-top: 5%;
-    margin-right: -13px;
+    margin-left: 85%;
   }
   .tripname {
     color: #EDF2F4;
@@ -237,8 +239,9 @@ label{
     font-family: 'Cuprum', sans-serif;
     margin-left: 50px;
   }
-  #destlist {
+  .destdrop {
     border: 2px solid #EDF2F4;
+    position: relative;
     border-radius: 5px;
     margin-top: 15px;
     height: 50px;
@@ -248,7 +251,12 @@ label{
     margin-left: 50px;
     line-height: 50px;
   }
-
+  .opennewdest{
+    position: relative;
+    float: right;
+    margin-top: 15px;
+    margin-right: 3%;
+  }
 /*Fonts*/
   font-family: 'PT Sans', sans-serif;
   font-family: 'Cuprum', sans-serif;
