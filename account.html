@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- <link rel="icon" href="../../favicon.ico"> -->
     <title>Group Project 1</title>
-  <!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-      <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
-  <!-- Custom styles for this template -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
+    <!-- Custom styles for this template -->
     <link href="style/style.css" rel="stylesheet">
   </head>
 
@@ -30,10 +30,11 @@
               <a class="navbar-brand" href="index.html">NSN</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                  <ul class="nav navbar-nav">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="mytrips.html">My Trips</a></li>
-                    <li><a href="account.html">Account</a></li>
+              <ul class="nav navbar-nav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mytrips.html">My Trips</a></li>
+                <li><a href="account.html">Account</a></li>
+              </ul>
             </div>
           </div>
         </nav>
@@ -49,9 +50,8 @@
           <img class="first-slide" src="assets/banner1.png" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Live Music on the Move</h1>
+              <h1>Profile</h1>
               <p>Find your next live concert, take photos, and share your experience.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up</a></p>
             </div>
           </div>
         </div>
@@ -62,52 +62,50 @@
       <hr class="featurette-divider">
 
       <div class="row featurette">
-        <div class="col-md-6 col-md-offset-1">
-          <h2 class="featurette-heading">Find Your next Event.</h2>
-          <p class="lead">Bands playing in your area.</p>
-        </div>
-        <div class="col-md-4">
-          <img class="featurette-image img-responsive center-block" src="assets/dj.jpeg" alt="Generic placeholder image">
-        </div>
-      </div>
-          <!-- <div id="googleMap" style="width:100%;height:400px;"></div>
+        <h1 class="text-center">MY TRIPS</h1><br>
 
-      <script>
-      function myMap() {
-      var mapProp= {
-          center:new google.maps.LatLng(51.508742,-0.120850),
-          zoom:5,
-      };
-      var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-      }
-      </script>
-      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmTfaVWL9ihT0Rjl0_wvqm5DeYXnbq66Y=myMap"></script>
-              </div> -->
-      <hr class="featurette-divider">
-
-      <div class="row featurette">
-        <div class="col-md-7 col-md-push-5">
-          <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <div class="addtripcontainer">
+          <div class="newtripprofile">
+              <span class="glyphicon glyphicon-remove-circle tripclose"></span>
+              <span class="glyphicon glyphicon-chevron-down tripexpand" style="visibility: hidden;"></span>
+              <h1 class="addnewtrip">Add New Trip&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary addtrip" data-toggle="modal" data-target="#addtrip">+</button></h1>
+              <p class="tripinformation">A personal space for you to share the best moments of your trips!</p>
+          </div>
         </div>
-        <div class="col-md-5 col-md-pull-7">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-      </div>
 
-      <hr class="featurette-divider">
 
-      <div class="row featurette">
-        <div class="col-md-7">
-          <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <div class="modal fade" id="addtrip" tabindex="-1" role="dialog" aria-labelledby="addtripLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addtripLabel">ADD A TRIP</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form> <!-- Adding a trip -->
+                  <p>Trip Name</p>
+                  <input type="text" name="newtripname" id="newtripname"><br>
+                  <p>Trip Desciption</p>
+                  <input type="textarea" name="newtripdescrip" id="newtripdescrip"></textarea><br>
+                </form><br>
+              </div>
+              <div class="modal-body">
+              <form enctype="multipart/form-data" action="uploader.php" method="POST">
+                  <input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+                      Choose a file to upload: <input name="uploadedfile" type="file" onchange="onFileSelected(event)" /><br />
+                  <img id="uploadedimage" height="200">
+              </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" value="Uploaded File">Add</button>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="col-md-5">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-      </div>
-
-      <hr class="featurette-divider">
+      </div><br>
 
 
           <!-- Marketing messaging and featurettes
@@ -120,21 +118,18 @@
         <div class="row">
           <div class="col-lg-4">
             <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
+            <h2>Trip #1</h2>
             <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4">
             <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
+            <h2>Trip #2</h2>
             <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4">
             <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-            <h2>Heading</h2>
+            <h2>Trip #3</h2>
             <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
 

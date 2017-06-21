@@ -64,7 +64,14 @@
     height: 500px;
   }
 
-
+  /* Sign Up / Login Buttons
+  -------------------------------------------------- */
+  #newusersubmit {
+    margin: 15px;
+  }
+  #returningusersubmit {
+    margin: 15px;
+  }
 
 /* MARKETING CONTENT
 -------------------------------------------------- */
@@ -173,6 +180,9 @@ label{
       width: 80%; /* Could be more or less, depending on screen size */
   }
 
+  .modal-footer {
+    color: #fff;
+  }
   /* The Close Button */
   .close {
       color: #aaa;
@@ -189,18 +199,8 @@ label{
   }
 
   .modalform {
-  text-align: center;
+    text-align: center;
   }
-
-  .pushright {
-    margin-left: 11px;
-  }
-  #newdestmodal {
-    top: 5%;
-  }
-/*  .pullleft {
-    margin-left: -15px;
-  }*/
 
 /*Trip Page*/
   .tripcontainer {
@@ -257,7 +257,47 @@ label{
     margin-top: 15px;
     margin-right: 3%;
   }
-/*Fonts*/
-  font-family: 'PT Sans', sans-serif;
-  font-family: 'Cuprum', sans-serif;
-  font-family: 'Crushed', cursive;
+  }
+
+  .pushright {
+    margin-left: 11px;
+  }
+  #newdestmodal {
+    top: 5%;
+  }
+
+#destlist {
+  border: 2px solid #EDF2F4;
+  border-radius: 5px;
+  margin-top: 15px;
+  height: 50px;
+  background-color: #EF233C;
+}
+
+/*Account Page*/
+
+.addtripcontainer {
+  width: 80%;
+  top: 20%;
+  left: 9%;
+  background-color: #2B2D42;
+  padding: 15px;
+  border-radius: 5px;
+  margin-left: 150px;
+  margin-bottom: 100px;
+  margin-top: 40px;
+}
+.newtripprofile{
+  height: 10%;
+  background-color: #8D99AE;
+  border-radius: 5px;
+  border: 2px solid #EDF2F4;
+  padding: 15px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.btn btn-primary {
+  float: right;
+  color: #EF233C;
+}
