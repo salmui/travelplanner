@@ -28,6 +28,7 @@
   // New Destination Submit
     function newdestsubmit(event){
       event.preventDefault()
+      var time = Date.now()
       debugger;
       var tripName = $(this)["0"].offsetParent.offsetParent.attributes[2].value
       var newDestname = $('#newdestname').val().trim()
@@ -37,7 +38,6 @@
       var newDestComm = $('#newdestcomm').val().trim()
       var currentTripCounter
       database.ref('users/' + userid + '/trips/' + tripName).once('value').then(function(snapshot){
-        console.log(snapshot.val().tripcounter)
         currentTripCounter = snapshot.val().tripcounter
       })
       database.ref('users/' + userid + '/trips/' + tripName + '/dests/' + newDestname).set({
@@ -45,7 +45,8 @@
         destLoc: newDestLoc,
         destArr: newDestArr,
         destDept: newDestDept,
-        destComm: newDestComm
+        destComm: newDestComm,
+        destcreated: time
       })
       $('#newdestmodal').hide()
     }
@@ -99,13 +100,11 @@
 
 // Firebase Listeners
   firebase.auth().onAuthStateChanged((user) => {
+    debugger;
     if (user) {
       console.log("---------auth state change-----------");
       userid = user.uid
       localStorage.setItem("userid", user.uid)
-      // dataref.once('value').then(function(response){
-      //   localStorage.setItem("tripcounter", response.val())
-      // })
     }
   });
 
@@ -117,13 +116,10 @@
       console.log('On mytrips page')
       console.log('userid = ' + userid)
       tripsref.once('value', function(response){
-        var responseAsArray = Object.keys(response.val())
         var triptemp = response.val()
         triptemp = $.map( triptemp, function( value, created ) {
-          debugger;
           var containersize = $('.tripcontainer')["0"].children.length
           var name = value.tripname
-          console.log(value)
           var mapObject = value
           var tripframe = $('<div class="tripitem tripitem' + containersize + '">')
           var tname = $('<h1 class="tripname tripname' + containersize + '">')
@@ -132,6 +128,7 @@
           var expandbtn = $('<a class="glyphicon glyphicon-chevron-down tripexpand" data-toggle="collapse" data-target="#destlist' + containersize +'"></a>')
           var destlist = $('<div class="collapse destdrop destdrop' + containersize + '">')
           var newdestbtn = $('<button  class="glyphicon glyphicon-plus opennewdest' + containersize + '"></button>')
+          var destref = database.ref('users/' + userid + '/trips/' + name + '/dests').orderByChild("destcreated")
           tripframe
             .attr("id", containersize)
             .appendTo($('.tripcontainer'))
@@ -151,6 +148,14 @@
             .attr("data-name", name)
             .addClass("opennewdest")
             .appendTo($('#destlist' + containersize))
+          destarray = $.map(value.dests, function (value, name) {
+            debugger;
+            console.log(name)
+            var destframe = $('<div class="destframe' + name + '">')
+            destframe
+              .appendTo($('#destlist' + containersize))
+              .text(name)
+          })
         })
       })
     } else {
