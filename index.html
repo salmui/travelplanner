@@ -4,20 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="icon" href="../../favicon.ico"> -->
     <title>Group Project 1</title>
-  <!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-      <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-        <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
-  <!-- Custom styles for this template -->
+    <!-- Custom styles for this template -->
     <link href="style/style.css" rel="stylesheet">
   </head>
 
   <body>
+    <!-- Navbar -->
     <div class="navbar-wrapper">
       <div class="container">
-
         <nav class="navbar navbar-inverse navbar-static-top">
           <div class="container">
             <div class="navbar-header">
@@ -26,29 +23,25 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">NSN</a>
+             <a class="navbar-brand" href="index.html">NSN</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#newsfeed">Newsfeed</a></li>
-                <li><a href="#addatrip">Add a Trip</a></li>
-
-                <li><a href="#account">Your Account</a></li>
+                  <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="mytrips.html">My Trips</a></li>
+                    <li><a href="account.html">Account</a></li>
+                    <li class="dropdown">
+                  </ul>
                 </li>
               </ul>
             </div>
           </div>
         </nav>
-
       </div>
     </div>
 
-
-    <!-- Carousel
-    ================================================== -->
+    <!-- Carousel-->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
 
@@ -59,63 +52,63 @@
             <div class="carousel-caption">
               <h1>Live Music on the Move</h1>
               <p>Find your next live concert, take photos, and share your experience.</p>
-              <p><button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Sign Up</button></p>
+              <p><a class="newusersignup btn btn-lg btn-primary" href="#" role="button">Sign up</a>&nbsp;&nbsp;&nbsp;<a class="returninguserlogin btn btn-lg btn-primary" href="#" role="button">Login</a></p>
             </div>
           </div>
         </div>
-
-    </div><!-- /.carousel -->
-
-    <!-- Sign Up on-click -->
-    <div id="id01" class="modal">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
-      <form class="modal-content animate" action="/action_page.php">
-        <div class="container">
-          <label for ="user-email"><b>Email</b></label>
-          <input type="text" placeholder="Enter Email" name="email" required>
-
-          <label for ="password-input"><b>Password</b></label>
-          <input type="password" placeholder="Enter Password" name="psw" required>
-
-          <label for ="confirm-password-input"><b>Repeat Password</b></label>
-          <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-          <input type="checkbox" checked="checked"> Remember me
-
-          <div class="clearfix">
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-            <button type="submit" class="signupbtn" id="user-sign-up">Sign Up</button>
-          </div>
-        </div>
-      </form>
     </div>
 
-    <script>
-    // Get the modal
-    var modal = document.getElementById('id01');
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-    </script>
 
+    <div id="newusermodal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+          <form class="modalform"> <!-- Adding a trip -->
+            <label for="newuseremail" class="">Enter Email</label><br>
+            <input type="text" name="newuseremail" class="modalinput" id="newuseremail"><br>
+            <label for="newuserpw">Enter a password</label><br>
+            <input type="text" name="newuserpw" class="modalinput" id="newuserpw"><br>
+            <label for="newuserconfirm">Confirm your password</label><br>
+            <input type="text" name="newuserconfirm" class="modalinput" id="newuserconfirm"><br>
+            <input type="submit" id="newusersubmit">
+            <p style="visibility:hidden" class="errormsg">Your passwords must match</p>
+          </form>
+      </div>
+
+    </div>
+
+    <div id="returninguser" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+          <form class="modalform"> <!-- Adding a trip -->
+            <label for="email" class="">Email</label><br>
+            <input type="text" name="returninguseremail" class="modalinput" id="returninguseremail"><br>
+            <label for="returninguserpw">Password</label><br>
+            <input type="text" name="returninguserpw" class="modalinput" id="returninguserpw"><br>
+            <input type="submit" id="returningusersubmit">
+            <p style="visibility:hidden" class="errormsg">Your passwords must match</p>
+          </form>
+      </div>
+
+    </div>
 
     <!-- START THE FEATURETTES -->
       <hr class="featurette-divider">
 
       <div class="row featurette">
-        <div class="col-md-7">
+        <div class="col-md-6 col-md-offset-1">
           <h2 class="featurette-heading">Find Your next Event.</h2>
           <p class="lead">Bands playing in your area.</p>
         </div>
-        <div class="col-md-5">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+        <div class="col-md-4">
+          <img class="featurette-image img-responsive center-block" src="assets/crowd.jpg" alt="Generic placeholder image">
         </div>
       </div>
           <!-- <div id="googleMap" style="width:100%;height:400px;"></div>
-
       <script>
       function myMap() {
       var mapProp= {
@@ -127,22 +120,19 @@
       </script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmTfaVWL9ihT0Rjl0_wvqm5DeYXnbq66Y=myMap"></script>
               </div> -->
-
       <hr class="featurette-divider">
 
       <div class="row featurette">
-        <div class="col-md-7 col-md-push-5">
-          <h2 class="featurette-heading">Blah Blah Blah.</h2>
-          <p class="lead">............</p>
+        <div class="col-md-6 col-md-push-6">
+          <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
+          <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
-        <div class="col-md-5 col-md-pull-7">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+        <div class="col-md-6 col-md-pull-6">
+          <img class="featurette-image img-responsive center-block" src="assets/dj2.jpeg" alt="Generic placeholder image">
         </div>
       </div>
 
-
-
-      <!-- <hr class="featurette-divider">
+      <hr class="featurette-divider">
 
       <div class="row featurette">
         <div class="col-md-7">
@@ -150,105 +140,50 @@
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive center-block" src="assets/keys.jpeg" alt="Generic placeholder image">
         </div>
-      </div> -->
+      </div>
 
       <hr class="featurette-divider">
-
-
-          <!-- Marketing messaging and featurettes
-          ================================================== -->
-          <!-- Wrap the rest of the page in another container to center all the content. -->
-
-          <div class="container marketing">
-
-            <!-- Three columns of text below the carousel -->
-          <div class="row">
-            <div class="col-lg-4">
-              <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="User uploaded attended event image" width="140" height="140">
-              <h2>Feature #1</h2>
-              <p>Most recent "add your trip" submissions.</p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="User uploaded attended event image" width="140" height="140">
-              <h2>Feature #2</h2>
-              <p>Most recent "add your trip" submissions.</p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-4">
-              <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="User uploaded attended event image" width="140" height="140">
-              <h2>Feature #3</h2>
-              <p>Most recent "add your trip" submissions.</p>
-              <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-          </div><!-- /.row -->
-
-        <!-- /END THE FEATURETTES -->
 
 
         <!-- FOOTER -->
         <footer>
           <p class="pull-right"><a href="#">Back to top</a></p>
-          <p>&copy; 2017 NateSalNick Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+          <p>© 2017 NateSalNick Company, Inc. · <a href="#">Privacy</a> · <a href="#">Terms</a></p>
         </footer>
       </div>
 
 <!-- Firebase Scripts - No scripts above!-->
   <!-- Linking to our Database -->
+
+  <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
   <!-- Base Link (required) -->
    <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase-app.js"></script>
   <!-- Database Link -->
     <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase-database.js"></script>
   <!-- OAuth Link - See Docs -->
     <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase-auth.js"></script>
-  <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/4.1.2/firebase.js"></script>
+  <!-- Initialize Firebase -->
+    <script>
+      var config = {
+        apiKey: "AIzaSyCNZ9cMznTZNSVQx9WIxmsrcTWKF7LN_4A",
+        authDomain: "ucbgp1.firebaseapp.com",
+        databaseURL: "https://ucbgp1.firebaseio.com",
+        projectId: "ucbgp1",
+        storageBucket: "ucbgp1.appspot.com",
+        messagingSenderId: "593100455307"
+      };
+      firebase.initializeApp(config);
+    </script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <!-- <script src="../../dist/js/bootstrap.min.js"></script> -->
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <!-- <script src="../../assets/js/vendor/holder.min.js"></script> -->
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script type="text/javascript" src="javascript/javascript.js"></script>
-  <!-- Initialize Firebase -->
-    <!-- <script> -->
-    //   var config = {
-    //     apiKey: "AIzaSyCNZ9cMznTZNSVQx9WIxmsrcTWKF7LN_4A",
-    //     authDomain: "ucbgp1.firebaseapp.com",
-    //     databaseURL: "https://ucbgp1.firebaseio.com",
-    //     projectId: "ucbgp1",
-    //     storageBucket: "ucbgp1.appspot.com",
-    //     messagingSenderId: "593100455307"
-    //   };
-    //   firebase.initializeApp(config);
-    //
-    // var database = firebase.database();
-    //
-    //
-    // $('#user-sign-up').on('click', function(){
-    //   var user_email = $('#user-email').val().trim();
-    //   var user_password = $('#password-input').val().trim();
-    //   var confirm_password = $('#confirm-password-input').val().trim();
-    //   debugger;
-    //   if(user_password === confirm_password){
-    //     firebase.auth().createUserWithEmailAndPassword(user_email, user_password).catch(function(error) {
-    //      // Handle Errors here.
-    //      var errorCode = error.code;
-    //      var errorMessage = error.message;
-    //      // ...
-    //       });
-    //   }
-    // })
-
-    <!-- </script> -->
-
 
   </body>
 </html>
