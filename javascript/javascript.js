@@ -46,6 +46,7 @@
   // New Destination Submit
     function newdestsubmit(event){
       event.preventDefault()
+      var time = Date.now()
       debugger;
       var tripName = $(this)["0"].offsetParent.offsetParent.attributes[2].value
       var newDestname = $('#newdestname').val().trim()
@@ -55,7 +56,6 @@
       var newDestComm = $('#newdestcomm').val().trim()
       var currentTripCounter
       database.ref('users/' + userid + '/trips/' + tripName).once('value').then(function(snapshot){
-        console.log(snapshot.val().tripcounter)
         currentTripCounter = snapshot.val().tripcounter
       })
       database.ref('users/' + userid + '/trips/' + tripName + '/dests/' + newDestname).set({
@@ -63,7 +63,8 @@
         destLoc: newDestLoc,
         destArr: newDestArr,
         destDept: newDestDept,
-        destComm: newDestComm
+        destComm: newDestComm,
+        destcreated: time
       })
       $('#newdestmodal').hide()
     }
@@ -118,6 +119,7 @@
 
 // Firebase Listeners
   firebase.auth().onAuthStateChanged((user) => {
+    debugger;
     if (user) {
       console.log("---------auth state change-----------");
       userid = user.uid
@@ -133,7 +135,6 @@
       console.log('On mytrips page')
       console.log('userid = ' + userid)
       tripsref.once('value', function(response){
-        var responseAsArray = Object.keys(response.val())
         var triptemp = response.val()
         triptemp = $.map( triptemp, function( value, created ) {                    // map 1
           var tripnum = $('.tripcontainer')["0"].children.length
