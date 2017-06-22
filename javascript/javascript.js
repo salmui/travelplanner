@@ -1,28 +1,23 @@
-var database = firebase.database();
+// $('#user-sign-up').on('click', function(){
+//   var user_email = $('#user-email').val().trim();
+//   var user_password = $('#password-input').val().trim();
+//   var confirm_password = $('#confirm-password-input').val().trim();
 
-var user_email = ""
-var user_password = ""
+//   console.log(user_email);
+//   console.log(user_password);
+//   console.log(confirm_password);
 
+//   debugger;
+//   if(user_password === confirm_password){
+//     firebase.auth().createUserWithEmailAndPassword(user_email, user_password).catch(function(error) {
+//      // Handle Errors here.
+//      var errorCode = error.code;
+//      var errorMessage = error.message;
+//      // ...
+//       });
+//   }
+// })
 
-$('#user-sign-up').on('click', function(){
-var user_email = $('#user-email').val().trim();
-var user_password = $('#password-input').val().trim();
-var confirm_password = $('#confirm-password-input').val().trim();
-
-console.log(user_email);
-console.log(user_password);
-console.log(confirm_password);
-
-debugger;
-if(user_password === confirm_password){
-  firebase.auth().createUserWithEmailAndPassword(user_email, user_password).catch(function(error) {
-   // Handle Errors here.
-   var errorCode = error.code;
-   var errorMessage = error.message;
-   // ...
-    });
-}
-})
 // Variables
   var database = firebase.database()
   var venueid = ''
@@ -48,11 +43,10 @@ if(user_password === confirm_password){
       $('#newtripmodal').hide()
     }
 
-
-
   // New Destination Submit
     function newdestsubmit(event){
       event.preventDefault()
+      var time = Date.now()
       debugger;
       var tripName = $(this)["0"].offsetParent.offsetParent.attributes[2].value
       var newDestname = $('#newdestname').val().trim()
@@ -62,7 +56,6 @@ if(user_password === confirm_password){
       var newDestComm = $('#newdestcomm').val().trim()
       var currentTripCounter
       database.ref('users/' + userid + '/trips/' + tripName).once('value').then(function(snapshot){
-        console.log(snapshot.val().tripcounter)
         currentTripCounter = snapshot.val().tripcounter
       })
       database.ref('users/' + userid + '/trips/' + tripName + '/dests/' + newDestname).set({
@@ -70,7 +63,8 @@ if(user_password === confirm_password){
         destLoc: newDestLoc,
         destArr: newDestArr,
         destDept: newDestDept,
-        destComm: newDestComm
+        destComm: newDestComm,
+        destcreated: time
       })
       $('#newdestmodal').hide()
     }
@@ -112,6 +106,7 @@ if(user_password === confirm_password){
       $('#newtripmodal')
         .show()
     }
+
   //New Destination
     function ndmodal(event){
       debugger;
@@ -124,58 +119,86 @@ if(user_password === confirm_password){
 
 // Firebase Listeners
   firebase.auth().onAuthStateChanged((user) => {
+    debugger;
     if (user) {
       console.log("---------auth state change-----------");
       userid = user.uid
       localStorage.setItem("userid", user.uid)
-      // dataref.once('value').then(function(response){
-      //   localStorage.setItem("tripcounter", response.val())
-      // })
     }
   });
 
 // My Trips
   $(document).on('ready', function(){
     userid = localStorage.getItem('userid')
-    if(window.location.pathname === '/travelplanner/mytrips.html' || window.location.pathname === "/C:/Users/Nate/Desktop/code/travelplannerfork/mytrips.html"){
+    if(page === "mytrips"){
       var tripsref = database.ref('users/' + userid + '/trips').orderByChild("created")
       console.log('On mytrips page')
       console.log('userid = ' + userid)
       tripsref.once('value', function(response){
-        var responseAsArray = Object.keys(response.val())
         var triptemp = response.val()
-        triptemp = $.map( triptemp, function( value, created ) {
-          debugger;
-          var containersize = $('.tripcontainer')["0"].children.length
+        triptemp = $.map( triptemp, function( value, created ) {                    // map 1
+          var tripnum = $('.tripcontainer')["0"].children.length
           var name = value.tripname
-          console.log(value)
           var mapObject = value
-          var tripframe = $('<div class="tripitem tripitem' + containersize + '">')
-          var tname = $('<h1 class="tripname tripname' + containersize + '">')
-          var tdescrip = $('<p class="tripdescrip tripdescrip' + containersize + '">')
-          var closebtn = $('<span class="glyphicon glyphicon-remove-circle tripclose tripclose' + containersize + '" data-toggle="collapse" data-target="#destinfo">')
-          var expandbtn = $('<a class="glyphicon glyphicon-chevron-down tripexpand" data-toggle="collapse" data-target="#destlist' + containersize +'"></a>')
-          var destlist = $('<div class="collapse destdrop destdrop' + containersize + '">')
-          var newdestbtn = $('<button  class="glyphicon glyphicon-plus opennewdest' + containersize + '"></button>')
+          var tripframe = $('<div class="tripitem tripitem' + tripnum + '">')
+          var tname = $('<h1 class="tripname tripname' + tripnum + '">')
+          var tdescrip = $('<p class="tripdescrip tripdescrip' + tripnum + '">')
+          var closebtn = $('<span class="glyphicon glyphicon-remove-circle tripclose tripclose' + tripnum + '" data-toggle="collapse" data-target="#destinfo">')
+          var expandbtn = $('<a class="glyphicon glyphicon-chevron-down tripexpand" data-toggle="collapse" data-target="#destlist' + tripnum +'"></a>')
+          var destlist = $('<div class="collapse destdrop destdrop' + tripnum + '">')
+          var newdestbtn = $('<button  class="glyphicon glyphicon-plus opennewdest' + tripnum + '"></button>')
           tripframe
-            .attr("id", containersize)
+            .attr("id", tripnum)
             .appendTo($('.tripcontainer'))
             .append(expandbtn)
             .append(closebtn)
           tname
             .text(mapObject.tripname)
-            .appendTo($('#' + containersize))
+            .appendTo($('#' + tripnum))
           tdescrip
             .text(mapObject.tripdesc)
-            .appendTo($('#' + containersize))
+            .appendTo($('#' + tripnum))
           destlist
-            .attr("id", "destlist" + containersize)
-            .appendTo($('.' + 'tripdescrip' + containersize))
+            .attr("id", "destlist" + tripnum)
+            .appendTo($('.' + 'tripdescrip' + tripnum))
           newdestbtn
-            .attr("data-number", containersize)
+            .attr("data-number", tripnum)
             .attr("data-name", name)
             .addClass("opennewdest")
-            .appendTo($('#destlist' + containersize))
+            .appendTo($('#destlist' + tripnum))
+          var desttemp = value.dests
+          desttemp = $.map( desttemp, function(key){
+            var destnum = $('.destdrop' + tripnum)["0"].children.length
+            var dname = key.destName
+            var dcomm = key.destComm
+            var darr = key.destArr
+            var ddept = key.destDept
+            var dloc = key.destLoc
+            var destframe = $('<div class="destframe" id="destframe' + destnum + '-' + tripnum + '">')
+            var destname = $('<div class="destname">')
+            var destcomment = $('<div class="destcomment">')
+            var destarrival = $('<div class="destarrival">')
+            var destdepart = $('<div class="destdepart">')
+            var destlocation = $('<div class="destlocation">')
+            debugger;
+            destframe
+              .appendTo($('#destlist' + tripnum))
+            destname
+              .text(dname)
+              .appendTo($('#destframe' + destnum + '-' + tripnum))
+            destcomment
+              .text(dcomm)
+              .appendTo($('#destframe' + destnum + '-' + tripnum))
+            destarrival
+              .text(darr)
+              .appendTo($('#destframe' + destnum + '-' + tripnum))
+            destdepart
+              .text(ddept)
+              .appendTo($('#destframe' + destnum + '-' + tripnum))
+            destlocation
+              .text(dloc)
+              .appendTo($('#destframe' + destnum + '-' + tripnum))
+          })
         })
       })
     } else {
